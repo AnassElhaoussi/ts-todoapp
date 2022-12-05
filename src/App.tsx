@@ -6,19 +6,24 @@ import Todos from './Todos'
 export interface ITodos {
   todo: string,
   completed: boolean,
+  id: number
 }
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodos[]>([])
   const [todo, setTodo] = useState<string>("")
+  const id = useRef<number>(0)
 
   const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-      setTodos((prev) => [...prev, {
-        todo,
-        completed: false
-      }])
+    id.current++
+    setTodos((prev) => [...prev, {
+      todo,
+      completed: false,
+      id: id.current
+    }])
     setTodo("")
+    console.log(todos)
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +45,10 @@ const App: React.FC = () => {
           onChange={onChange}
           />
         </form>
-        <Todos todos={todos} />
+        <Todos 
+        todos={todos}
+        setTodos={setTodos}
+        />
       </div>
     </div>
   )
