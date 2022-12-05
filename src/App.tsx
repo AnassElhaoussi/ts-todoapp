@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useState, useRef } from 'react'
 import './styles/index.css'
 import Todos from './Todos'
+import { useLocalStorage } from './hooks/useLocalStorage'
 
 export interface ITodos {
   todo: string
@@ -9,7 +10,7 @@ export interface ITodos {
 }
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<ITodos[]>([])
+  const [todos, setTodos] = useLocalStorage<ITodos[]>('todos', [])
   const [todo, setTodo] = useState<string>("")
   const [isUpdated, setIsUpdated] = useState<boolean>(false)
   const [id, setId] = useState<number | null>(null)
